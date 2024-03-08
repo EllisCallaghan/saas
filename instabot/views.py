@@ -21,7 +21,7 @@ def csvdownload(request :HttpRequest):
   # CHANGE THESE VARIABLES
 
   # the user you signed into instagram with
-  USER = '90soldschool.hiphop'
+  USER = 'beatles_.mania'
   # the profiles you want to get suggested users from
   target_profiles = target
 
@@ -95,18 +95,22 @@ def csvdownload(request :HttpRequest):
 def download(request : HttpRequest):
   print(request.GET.get('profile',''))
   target = request.GET.get('profile','')
+  amount = request.GET.get('amount','')
   L = Instaloader()
 
   # NOTE: rename .env.template to .env, then edit these variables in .env
   USER = "beatles_.mania"
 
-  #NOTE: make sure you have logged into instagram in firefox, DO NOT USE UR MAIN ACCOUNT AS YOU COULD GET BANNED
+  os.system("python session.py")
+
   L.load_session_from_file(USER)      
   
 
   # the profile you want to download from
   PROFILE = target
-  DOWNLOAD_AMOUNT = 3
+  amount = int(amount)
+  print(amount)
+  DOWNLOAD_AMOUNT = amount
 
   class Main:
       def __init__(self,target_profile:str,download_amount:int,username:str=None):
@@ -128,11 +132,13 @@ def download(request : HttpRequest):
 
 
           for post in range(self.download_amount):
+            try:
               L.download_post(posts_sorted_by_likes[post],PROFILE)
-              
+            except:
+              pass
   x= Main(target_profile=PROFILE,download_amount=DOWNLOAD_AMOUNT,username=USER)
   x.run()
-  shutil.make_archive('test','zip','ilovemythebeatles')
+  shutil.make_archive('test','zip',target)
   data = None
   with open('test.zip','rb') as f:
     data = f.read()
@@ -142,6 +148,6 @@ def download(request : HttpRequest):
   try:
     return response
   finally:
-    shutil.rmtree('ilovemythebeatles')
+    shutil.rmtree(target)
     if os.path.exists('test.zip'):
       os.remove('test.zip')
