@@ -21,7 +21,7 @@ def csvdownload(request :HttpRequest):
   # CHANGE THESE VARIABLES
 
   # the user you signed into instagram with
-  USER = 'beatles_.mania'
+  USER = '90soldschool.hiphop'
   # the profiles you want to get suggested users from
   target_profiles = target
 
