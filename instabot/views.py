@@ -98,7 +98,7 @@ def download(request : HttpRequest):
   L = Instaloader()
 
   # NOTE: rename .env.template to .env, then edit these variables in .env
-  USER = "beatles_.mania"
+  USER = "90soldschool.hiphop"
 
   os.system("python session.py")
 
